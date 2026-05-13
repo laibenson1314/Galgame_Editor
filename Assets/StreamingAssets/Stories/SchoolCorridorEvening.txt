@@ -1,0 +1,31 @@
+#bg school_corridor_evening
+#enter mio normal
+
+澪: ……新面孔。轉學生？
+
+#choice
+我只是路過，不關我的事。 => route_normal
+你剛剛好帥……那個，威脅人的樣子。 => route_like
+需要我幫忙把那傢伙處理掉嗎？ => route_yandere
+#choice
+
+*route_normal
+澪: 哦～很會明哲保身嘛。
+澪: 不過……太無趣了。
+澪: 下次再用這種回答，我就親自把你變得『有趣』一點。
+#jump Scene2
+
+*route_like
+澪: 哈哈哈！居然敢當面說我帥？
+澪: 你這傢伙……膽子挺大的嘛。
+澪: ……第一次有人不怕我，還誇我。
+澪: 你叫什麼名字？我要記住你。
+#jump Scene2
+
+*route_yandere
+#change mio close
+澪: …………哎呀。
+澪: 想幫我處理掉他？
+澪: 呵呵……你果然和我一樣，是個壞孩子呢。
+澪: 我喜歡壞孩子……喜歡到想把你鎖起來，只屬於我一個人。
+#jump Scene2

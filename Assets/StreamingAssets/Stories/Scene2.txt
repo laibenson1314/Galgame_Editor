@@ -1,0 +1,37 @@
+#bg rooftop_night
+#enter mio normal
+
+澪: ……我啊，其實很討厭這個世界。
+澪: 大家都戴著假面具，只有我一個人……
+澪: 遇見你之後，我好像開始不想一個人了。
+
+澪: 這是契約。
+澪: 從今天開始，你就是我的了。
+澪: 不准看別的女生，不准逃走……
+澪: 要是敢背叛我，我就把這條鎖鏈勒緊，然後陪你一起死。
+
+#choice 
+緊緊抱住她 => ending_hug
+直接吻她 => ending_kiss
+那我是不是該先準備遺書？ => ending_joke
+#choice
+
+*ending_hug
+#change mio blush
+澪: ……！
+澪: 笨蛋……突然這樣……
+澪: ……要好好對我喔？不然我真的會把你吃得乾乾淨淨的。
+#jump DemoEnd
+
+*ending_kiss
+#change mio shock
+澪: ……！
+#change mio blush
+澪: ……你這傢伙，突然襲擊……
+澪: 不過……我允許你。
+#jump DemoEnd
+
+*ending_joke
+#change mio pout
+澪: 遺書？呵……你以為我會讓你寫完嗎？
+#jump DemoEnd
