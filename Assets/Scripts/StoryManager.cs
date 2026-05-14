@@ -80,7 +80,6 @@ public class StoryManager : MonoBehaviour
     }
     private void CharacterEnter(string characterName, string characterStatus)
     {
-        Debug.Log($"[StoryManager] #enter: {characterName}");
         GameObject character = new GameObject(characterName);
         character.AddComponent<SpriteRenderer>().sprite = LoadCharacter(characterName, characterStatus);
         character.GetComponent<SpriteRenderer>().sortingOrder = 10;
@@ -90,19 +89,17 @@ public class StoryManager : MonoBehaviour
     }
     private void CharacterExit(string characterName)
     {
-        Debug.Log($"[StoryManager] #exit: {characterName}");
         Destroy(CharactersFolder.Find(characterName).gameObject);
     }
     private void CharacterChangeSprite(string characterName, string characterStatus)
     {
-        Debug.Log($"[StoryManager] #change: {characterName}");
         GameObject character = CharactersFolder.Find(characterName).gameObject;
         character.GetComponent<SpriteRenderer>().sprite = LoadCharacter(characterName, characterStatus);
     }
     private void JumpToPart(string part)
     {
-        contentShowing.pausing = true;
         nextStory = part;
+        contentShowing.pausing = true;
         switchScene.SetActive(true);
         Invoke(nameof(stopContentPausing), 1f);
     } private void stopContentPausing() { contentShowing.pausing = false; }
@@ -134,7 +131,6 @@ public class StoryManager : MonoBehaviour
     }
     Sprite LoadBackground(string backgroundName)
     {
-        Debug.Log($"[StoryManager] #bg: {backgroundName}");
         return Resources.Load<Sprite>($"Backgrounds/{backgroundName}");
     }
 }

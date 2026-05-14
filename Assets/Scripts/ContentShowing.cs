@@ -47,7 +47,6 @@ public class ContentShowing : MonoBehaviour
     public void ShowText(string title, string content)
     {
         finished = true;
-        Debug.Log($"[ContentShowing] title: {title}, content: {content}");
         Title.text = title;
         originalText = content;
         currentText = "";

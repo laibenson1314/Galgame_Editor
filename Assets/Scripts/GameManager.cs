@@ -16,17 +16,19 @@ public class GameManager : MonoBehaviour
 
     public void Story(string storyName)
     {
-        Debug.Log($"[GameManager] StartStory {storyName}");
+        string path = Path.Combine(Application.streamingAssetsPath, "Stories", $"{storyName}.txt");
+        if (!File.Exists(path))
+        {
+            Debug.LogError($"[GameManager] Story file not found: {path}");
+            return;
+        }
+
+        Debug.Log($"[GameManager] Start story {storyName}");
         for(int i = 0; i < CharactersFolder.childCount; i++)
             Destroy(CharactersFolder.GetChild(i).gameObject);
         storyManager.StartStory(
-            File.ReadAllLines(
-                Path.Combine(
-                    Application.streamingAssetsPath, 
-                    "Stories", 
-                    $"{storyName}.txt"
-                )
-            ).Where(x=>x.Length > 0).ToArray()
+            File.ReadAllLines(path)
+                .Where(x=>x.Length > 0).ToArray()
         );
     }
 }
