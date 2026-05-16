@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[GameManager] Start story {storyName}");
         for(int i = 0; i < CharactersFolder.childCount; i++)
             Destroy(CharactersFolder.GetChild(i).gameObject);
         storyManager.StartStory(path);

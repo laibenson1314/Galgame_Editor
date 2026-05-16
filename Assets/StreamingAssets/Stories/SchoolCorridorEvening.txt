@@ -3,7 +3,7 @@
 
 澪: ……新面孔。轉學生？
 
-#scene TestScene
+//#scene TestScene
 
 #choice
 我只是路過，不關我的事。 => route_normal

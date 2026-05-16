@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -80,7 +81,12 @@ public class StoryManager : MonoBehaviour
         {
             if(_currentIndex >= _scripts.Length) break;
             string currentLine = _scripts[_currentIndex];
-            if (currentLine.StartsWith("#"))
+            if (currentLine.StartsWith("//"))
+            {
+                _currentIndex++;
+                continue;
+            }
+            else if (currentLine.StartsWith("#"))
             {
                 string[] parts = currentLine[1..].Split(' ');
                 Compiler(parts[0], parts[1..]);
@@ -129,7 +135,6 @@ public class StoryManager : MonoBehaviour
                 JumpToPart(arg[0]);
                 break;
             case "choice":
-                if(CheckArgs("SpawnChoiceButton", arg.Length, cmd)) return;
                 SpawnChoiceButton();
                 break;
         }
@@ -169,20 +174,45 @@ public class StoryManager : MonoBehaviour
         _currentIndex++;
         do
         {
-            string[] arg = _scripts[_currentIndex].Split("=>");
+            if(!TryParseChoise(_scripts[_currentIndex], out string left, out string right))
+            {
+                _currentIndex++;
+                continue;
+            }
 
             var btn = Instantiate(buttonPrefab, ButtonsFolder);
-            btn.GetComponentInChildren<Text>().text = arg[0];
+            btn.GetComponentInChildren<Text>().text = left;
             btn.onClick.AddListener(() =>
             {
-                _currentIndex = _scripts.ToList().IndexOf($"*{arg[1].Trim()}") + 1;
+                _currentIndex = _scripts.ToList().IndexOf($"*{right}") + 1;
                 contentShowing.pausing = false;
                 foreach (Transform child in ButtonsFolder) Destroy(child.gameObject);
                 NextStep();
             });
 
             _currentIndex++;
-        } while (!_scripts[_currentIndex].StartsWith("#"));
+        } while (_scripts[_currentIndex] != "#choice");
+    } private bool TryParseChoise(string input, out string left, out string right)
+    {
+        string[] args = input.Split("=>");
+        if (args.Length != 2)
+        {
+            Debug.LogError($"[StoryManager] Invalid choice command format at story {Path.GetFileNameWithoutExtension(_path)} line {_currentIndex + 1}." +
+                $"\r\n Expected format: ButtonText => TargetPart");
+            left = right = null;
+            return false;
+        }
+        if(args[1].TrimStart() != args[1].Trim())
+        {
+            Debug.LogError($"[StoryManager] Invalid part format at story {Path.GetFileNameWithoutExtension(_path)} line {_currentIndex + 1}. " +
+                $"\r\n Expected format: my_part");
+            left = right = null;
+            return false;
+        }
+
+        left = args[0];
+        right = args[1].Trim();
+        return true;
     }
     private void ChangeScene(string sceneName)
     {
@@ -204,11 +234,24 @@ public class StoryManager : MonoBehaviour
     }
     private bool CheckArgs(string methodName, int argCount, string cmd)
     {
-        if (typeof(void).GetMethod(methodName).GetParameters().Length != argCount)
+        var method = typeof(StoryManager).GetMethod(
+            methodName,
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+        );
+
+        if (method == null)
         {
-            Debug.LogError($"[StoryManager] Command {cmd} requires {argCount} arguments!");
+            Debug.LogError($"[StoryManager] Method '{methodName}' not found!");
             return true;
         }
+
+        int expectedCount = method.GetParameters().Length;
+        if (expectedCount != argCount)
+        {
+            Debug.LogError($"[StoryManager] Command '{cmd}' requires {expectedCount} arguments, but got {argCount}!");
+            return true;
+        }
+
         return false;
     }
 

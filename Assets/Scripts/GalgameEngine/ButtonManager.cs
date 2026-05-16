@@ -3,7 +3,7 @@ using UnityEngine;
 public class ButtonManager : MonoBehaviour
 {
     [SerializeField] private float smoothMoveSpeed = .01f;
-    [SerializeField] private float layoutHeight = 400f; // ±±¨î«ö¶s¤À§Gªº½d³ò
+    [SerializeField] private float layoutHeight = 400f;
 
     private void Update()
     {
