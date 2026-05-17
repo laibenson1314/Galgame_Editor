@@ -22,7 +22,7 @@ public class SceneController : MonoBehaviour
     }
     public async void ReturnScene()
     {
-        await SceneManager.UnloadSceneAsync("SampleScene");
+        await SceneManager.UnloadSceneAsync(switchSceneName);
         switchSceneName = null;
         foreach (var item in SceneManager.GetActiveScene().GetRootGameObjects()) item.SetActive(true);
     }
