@@ -22,9 +22,9 @@ public class SceneController : MonoBehaviour
         foreach(var item in SceneManager.GetActiveScene().GetRootGameObjects()) item.SetActive(false);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
     }
-    public async void ReturnScene(string sceneName)
+    public async void ReturnScene()
     {
-        await SceneManager.UnloadSceneAsync(switchSceneName);
+        await SceneManager.UnloadSceneAsync("SampleScene");
         switchSceneName = null;
         foreach (var item in SceneManager.GetActiveScene().GetRootGameObjects()) item.SetActive(true);
     }

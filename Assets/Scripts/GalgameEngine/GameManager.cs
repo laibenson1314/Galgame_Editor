@@ -8,10 +8,11 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Transform CharactersFolder;
     [SerializeField] private StoryManager storyManager;
+    [SerializeField] private string startingStory = "StartingStory";
 
     private void Awake()
     {
-        Story("StartingStory");
+        Story(startingStory);
     }
 
     public void Story(string storyName)
