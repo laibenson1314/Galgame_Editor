@@ -18,6 +18,7 @@ MemoryCaptures/
 *.pidb
 *.booproj
 *.svd
+*.meta
 
 .vscode/
 .vs/
