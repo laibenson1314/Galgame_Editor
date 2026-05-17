@@ -1,12 +1,8 @@
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text.RegularExpressions;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class StoryManager : MonoBehaviour
 {
@@ -140,10 +136,20 @@ public class StoryManager : MonoBehaviour
     }
     private void CharacterExit(string characterName)
     {
+        if(CharactersFolder.Find(characterName) == null)
+        {
+            Debug.LogError($"[StoryManager] Character {characterName} not found in Story!");
+            return;
+        }
         Destroy(CharactersFolder.Find(characterName).gameObject);
     }
     private void CharacterChangeSprite(string characterName, string characterStatus)
     {
+        if (CharactersFolder.Find(characterName) == null)
+        {
+            Debug.LogError($"[StoryManager] Character {characterName} not found in Story!");
+            return;
+        }
         if (!TryLoadSprite(LoadCharacter(characterName, characterStatus), "Character", out Sprite sprite)) return;
         GameObject character = CharactersFolder.Find(characterName).gameObject;
         character.GetComponent<SpriteRenderer>().sprite = sprite;
