@@ -1,4 +1,5 @@
 # Galgame Editor
+[English](README.md) | [繁體中文](README.zh.md)
 
 A visual novel editor built with **Unity 6**, allowing you to create your own Galgame entirely through plain text scripts — no programming required.
 
