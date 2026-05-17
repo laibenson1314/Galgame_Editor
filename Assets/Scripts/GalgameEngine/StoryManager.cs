@@ -94,6 +94,14 @@ public class StoryManager : MonoBehaviour
                 if(CheckArgs("SwitchBackground", arg.Length, cmd)) return;
                 SwitchBackground(arg[0]);
                 break;
+            case "bgm":
+                if (CheckArgs("PlayBackgroundMusic", arg.Length, cmd)) return;
+                PlayBackgroundMusic(arg[0], arg[1]);
+                break;
+            case "stopbgm":
+                if(CheckArgs("StopBackgroundMusic", arg.Length, cmd)) return;
+                StopBackgroundMusic(arg[0]);
+                break;
             case "enter":
                 if(CheckArgs("CharacterEnter", arg.Length, cmd)) return;
                 CharacterEnter(arg[0], arg[1]);
@@ -123,6 +131,32 @@ public class StoryManager : MonoBehaviour
     {
         if(!TryLoadSprite(LoadBackground(backgroundName), "Background", out Sprite sprite)) return;
         Background.sprite = sprite;
+    }
+    private void PlayBackgroundMusic(string bgmName, string volumnString)
+    {
+        if(!int.TryParse(volumnString, out int volumn) || volumn < 0 || volumn > 100)
+        {
+            Debug.LogError($"[StoryManager] Invalid volume format at story {Path.GetFileNameWithoutExtension(_path)} line {_currentIndex + 1}. " +
+                $"\r\n Expected format: 0-100");
+            return;
+        }
+        AudioClip clip = Resources.Load<AudioClip>($"Audios/{bgmName}");
+        if (clip == null)
+        {
+            Debug.LogError($"[StoryManager] Background music {bgmName} not found!");
+            return;
+        }
+        BackgroundMusicManager.Instance.Play(clip, volumn);
+    }
+    private void StopBackgroundMusic(string bgmName)
+    {
+        AudioClip clip = Resources.Load<AudioClip>($"Audio/{bgmName}");
+        if (clip == null)
+        {
+            Debug.LogError($"[StoryManager] Background music {bgmName} not found!");
+            return;
+        }
+        BackgroundMusicManager.Instance.Stop();
     }
     private void CharacterEnter(string characterName, string characterStatus)
     {
