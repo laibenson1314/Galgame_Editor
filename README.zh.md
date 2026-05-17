@@ -1,7 +1,8 @@
 # Galgame 編輯器
+[English](README.md) | [繁體中文](README.zh.md)
 
 一款基於 **Unity 6** 的視覺小說編輯器，讓你完全透過純文字腳本創作自己的 Galgame——無需任何程式設計經驗。
-[English](README.md) | [繁體中文](README.zh.md)
+
 ---
 
 ## 功能特色
