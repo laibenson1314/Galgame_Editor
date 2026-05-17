@@ -10,7 +10,6 @@ Want me to help you take care of that guy? => route_yandere
 #choice
 
 *route_normal
-#scene TestScene
 Mio: Oh~ Playing it safe, are we.
 Mio: But……how boring.
 Mio: Next time you give me an answer like that, I'll personally make you a little more "interesting."
