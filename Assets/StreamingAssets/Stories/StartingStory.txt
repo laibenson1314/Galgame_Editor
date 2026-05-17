@@ -1,9 +1,9 @@
 #bg rooftop_night
 #enter mio normal
 
-澪: ……又是一個人啊。
+Mio: ……Alone again, as always.
 
-澪: ——新來的，你盯著我看了好久呢。
-澪: 想被我『吃掉』嗎？
+Mio: ——Hey, new kid. You've been staring at me for a while now.
+Mio: Want me to "devour" you?
 
 #jump SchoolCorridorEvening

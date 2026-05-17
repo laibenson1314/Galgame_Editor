@@ -422,7 +422,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.6114721, g: 0.7075348, b: 0.8584906, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -478,6 +478,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &617510083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617510084}
+  - component: {fileID: 617510085}
+  m_Layer: 0
+  m_Name: SceneController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &617510084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617510083}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &617510085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617510083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d464a941699cbf945afdbc290b79ac82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneController
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +676,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6E2C\u8A66"
+  m_Text: Test
 --- !u!222 &641466650
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -675,8 +719,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -14.8745}
-  m_SizeDelta: {x: -12.865, y: -55.4777}
+  m_AnchoredPosition: {x: 0, y: -36.91568}
+  m_SizeDelta: {x: -12.865, y: -11.3953}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &766331618
 MonoBehaviour:
@@ -711,7 +755,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6E2C\u8A66"
+  m_Text: Test
 --- !u!222 &766331619
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -783,7 +827,7 @@ GameObject:
   - component: {fileID: 1294908563}
   - component: {fileID: 1294908562}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: ContentShower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -822,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd780dced5c02042a615762871c32a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ContentShowing
-  TextShowSpeed: 0.05
+  TextShowSpeed: 0.01
   Title: {fileID: 641466649}
   Content: {fileID: 766331618}
   StoryManager: {fileID: 22697137}
@@ -1185,3 +1229,4 @@ SceneRoots:
   - {fileID: 314110160}
   - {fileID: 1658228504}
   - {fileID: 22697138}
+  - {fileID: 617510084}

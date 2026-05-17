@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -29,48 +30,27 @@ public class StoryManager : MonoBehaviour
         SetUp();
         if(_currentIndex >= _scripts.Length)
         {
-            switchScene.SetActive(true);
+            string line = _scripts[_currentIndex - 1];
+            if (!line.StartsWith("#jump") && !line.StartsWith("#end"))
+                Debug.LogWarning($"[StoryManager] Story ended, theres not any #jump or #end here");
+            //switchScene.SetActive(true);
             return;
         }
-        string[] parts = _scripts[_currentIndex].Split(": ");
-        contentShowing.ShowText(parts[0], parts[1]);
+        string[] parts = _scripts[_currentIndex].Split(":");
+        if (parts.Length == 2) contentShowing.ShowText(parts[0].TrimEnd(), parts[1].TrimStart());
+        else Debug.LogError($"[StoryManager] Invalid command at story {Path.GetFileNameWithoutExtension(_path)} line {_currentIndex + 1}.\r\n" +
+            $"Expected format: character_name: text");
         _currentIndex++;
     }
 
     public void StartStory(string path)
     {
-        if (string.IsNullOrEmpty(PlayerPrefs.GetString("sceneChangeTransport")))
-        {
-            _path = path;
-            _scripts = File.ReadAllLines(path);
-            _currentIndex = 0;
-        }
-        else
-        {
-            var json = JsonUtility.FromJson<SceneChangeTransport>(PlayerPrefs.GetString("sceneChangeTransport"));
-            _path = json.path;
-            _scripts = File.ReadAllLines(json.path);
-            SetUp();
-            _currentIndex = json.currentIndex;
-
-            foreach (Transform child in CharactersFolder) Destroy(child.gameObject);
-
-            for (int i = 0; i <= _currentIndex; i++)
-            {
-                if (_scripts[i].StartsWith("#"))
-                {
-                    string[] parts = _scripts[i][1..].Split(' ');
-                    Compiler(parts[0], parts[1..]);
-                }
-            }
-
-            PlayerPrefs.DeleteKey("sceneChangeTransport");
-        }
-
-        _scripts = _scripts
+        _path = path;
+        _scripts = File.ReadAllLines(path)
             .ToList()
             .Where(x => x.Length > 0)
             .ToArray();
+        _currentIndex = 0;
         NextStep();
     }
 
@@ -137,16 +117,22 @@ public class StoryManager : MonoBehaviour
             case "choice":
                 SpawnChoiceButton();
                 break;
+            case "end":
+                if(CheckArgs("ChangeScene", arg.Length, cmd)) return;
+                StoryEnd(arg[0]);
+                break;
         }
     }
     private void SwitchBackground(string backgroundName)
     {
-        Background.sprite = LoadBackground(backgroundName);
+        if(!TryLoadSprite(LoadBackground(backgroundName), "Background", out Sprite sprite)) return;
+        Background.sprite = sprite;
     }
     private void CharacterEnter(string characterName, string characterStatus)
     {
+        if (!TryLoadSprite(LoadCharacter(characterName, characterStatus), "Character", out Sprite sprite)) return;
         GameObject character = new GameObject(characterName);
-        character.AddComponent<SpriteRenderer>().sprite = LoadCharacter(characterName, characterStatus);
+        character.AddComponent<SpriteRenderer>().sprite = sprite;
         character.GetComponent<SpriteRenderer>().sortingOrder = 10;
         character.transform.localScale = new Vector2(1.57f, 1.57f);
         character.transform.position = new Vector2(0f, -1.22f);
@@ -158,8 +144,9 @@ public class StoryManager : MonoBehaviour
     }
     private void CharacterChangeSprite(string characterName, string characterStatus)
     {
+        if (!TryLoadSprite(LoadCharacter(characterName, characterStatus), "Character", out Sprite sprite)) return;
         GameObject character = CharactersFolder.Find(characterName).gameObject;
-        character.GetComponent<SpriteRenderer>().sprite = LoadCharacter(characterName, characterStatus);
+        character.GetComponent<SpriteRenderer>().sprite = sprite;
     }
     private void JumpToPart(string part)
     {
@@ -167,7 +154,7 @@ public class StoryManager : MonoBehaviour
         contentShowing.pausing = true;
         switchScene.SetActive(true);
         Invoke(nameof(stopContentPausing), 1f);
-    }private void stopContentPausing() { contentShowing.pausing = false; }
+    }private void stopContentPausing() => contentShowing.pausing = false;
     private void SpawnChoiceButton()
     {
         contentShowing.pausing = true;
@@ -192,7 +179,8 @@ public class StoryManager : MonoBehaviour
 
             _currentIndex++;
         } while (_scripts[_currentIndex] != "#choice");
-    } private bool TryParseChoise(string input, out string left, out string right)
+    } 
+    private bool TryParseChoise(string input, out string left, out string right)
     {
         string[] args = input.Split("=>");
         if (args.Length != 2)
@@ -221,16 +209,14 @@ public class StoryManager : MonoBehaviour
             Debug.LogError($"Scene {sceneName} not found! Make sure it's added to the build settings.");
             return;
         }
-
-        PlayerPrefs.SetString(
-            "sceneChangeTransport",
-            JsonUtility.ToJson(new SceneChangeTransport
-            {
-                path = _path,
-                currentIndex = _currentIndex + 1,
-            })
-        );
-        SceneManager.LoadScene(sceneName);
+        SceneController.Instance.SwitchScene("TestScene");
+    }
+    private void StoryEnd(string endName)
+    {
+        if(!TryLoadSprite(LoadEnd(endName), "End image", out Sprite end)) return;
+        foreach (Transform child in CharactersFolder) Destroy(child.gameObject);
+        contentShowing.gameObject.SetActive(false);
+        Background.sprite = end;
     }
     private bool CheckArgs(string methodName, int argCount, string cmd)
     {
@@ -255,18 +241,18 @@ public class StoryManager : MonoBehaviour
         return false;
     }
 
-    Sprite LoadCharacter(string characterName, string characterStatus)
+    bool TryLoadSprite(Sprite sprite, string cmd, out Sprite outSprite)
     {
-        return Resources.Load<Sprite>($"Characters/{characterName}/{characterStatus}");
+        if(sprite == null)
+        {
+            Debug.LogError($"[StoryManager] {cmd} not found!");
+            outSprite = null;
+            return false;
+        }
+        outSprite = sprite;
+        return true;
     }
-    Sprite LoadBackground(string backgroundName)
-    {
-        return Resources.Load<Sprite>($"Backgrounds/{backgroundName}");
-    }
-}
-
-internal class SceneChangeTransport
-{
-    public string path;
-    public int currentIndex;
+    Sprite LoadCharacter(string characterName, string characterStatus) => Resources.Load<Sprite>($"Characters/{characterName}/{characterStatus}");
+    Sprite LoadBackground(string backgroundName) => Resources.Load<Sprite>($"Backgrounds/{backgroundName}");
+    Sprite LoadEnd(string endName) => Resources.Load<Sprite>($"Endings/{endName}");
 }

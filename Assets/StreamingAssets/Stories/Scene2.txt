@@ -1,37 +1,37 @@
 #bg rooftop_night
 #enter mio normal
 
-澪: ……我啊，其實很討厭這個世界。
-澪: 大家都戴著假面具，只有我一個人……
-澪: 遇見你之後，我好像開始不想一個人了。
+Mio: ……You know, I actually hate this world.
+Mio: Everyone wears a mask. I've always been the only one……
+Mio: But since meeting you, I think I've started not wanting to be alone anymore.
 
-澪: 這是契約。
-澪: 從今天開始，你就是我的了。
-澪: 不准看別的女生，不准逃走……
-澪: 要是敢背叛我，我就把這條鎖鏈勒緊，然後陪你一起死。
+Mio: This is a contract.
+Mio: Starting today, you belong to me.
+Mio: No looking at other girls. No running away……
+Mio: And if you dare betray me, I'll pull this chain tight — and we'll die together.
 
 #choice 
-緊緊抱住她 => ending_hug
-直接吻她 => ending_kiss
-那我是不是該先準備遺書？ => ending_joke
+Hold her tight => ending_hug
+Kiss her directly => ending_kiss
+Should I prepare my will first? => ending_joke
 #choice
 
 *ending_hug
 #change mio blush
-澪: ……！
-澪: 笨蛋……突然這樣……
-澪: ……要好好對我喔？不然我真的會把你吃得乾乾淨淨的。
+Mio: ……!
+Mio: You idiot……doing that so suddenly……
+Mio: ……You'd better treat me right, okay? Otherwise I really will swallow you whole.
 #jump DemoEnd
 
 *ending_kiss
 #change mio shock
-澪: ……！
+Mio: ……!
 #change mio blush
-澪: ……你這傢伙，突然襲擊……
-澪: 不過……我允許你。
+Mio: ……You, a surprise attack out of nowhere……
+Mio: But……I'll allow it.
 #jump DemoEnd
 
 *ending_joke
 #change mio pout
-澪: 遺書？呵……你以為我會讓你寫完嗎？
+Mio: A will? Heh……do you really think I'd let you finish writing it?
 #jump DemoEnd

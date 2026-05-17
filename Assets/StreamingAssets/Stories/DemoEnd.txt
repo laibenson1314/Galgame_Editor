@@ -1,5 +1,5 @@
 #bg black
-澪: 我本來以為自己永遠不會喜歡上任何人。
-澪: 結果第一眼看到你，就知道完蛋了。
-澪: 所以……要好好對我喔？
-澪: Demo 結束，感謝遊玩！
+Mio: I used to think I'd never fall for anyone.
+Mio: Then I saw you for the first time, and I knew I was done for.
+Mio: So……you'd better treat me right, okay?
+#end demo_end

@@ -5,6 +5,6 @@ public class SwitchSceneToSampleScene : MonoBehaviour
 {
     public void BackToSampleScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneController.Instance.ReturnScene("SampleScene");
     }
 }
