@@ -154,6 +154,28 @@ Displays an ending image and concludes the story.
 
 ---
 
+### `#bgm <bgm_name>`
+
+Play an background music.
+
+- Music file: `Assets/Resources/Audios/<bgm_name>.mp3`
+
+```
+#bgm BGM
+```
+
+---
+
+### `#stopbgm`
+
+Stop background music.
+
+```
+#stopbgm
+```
+
+---
+
 ### `#choice`
 
 Presents the player with a set of choices, each branching to a route label defined in the same script. Wrap options between two `#choice` lines.

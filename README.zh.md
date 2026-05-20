@@ -154,6 +154,23 @@ SceneController.Instance.ReturnScene();
 
 ---
 
+### `#bgm <背景音樂名稱>`
+
+撥放一段背景音樂。
+
+- 音樂檔案：`Assets/Resources/Audios/<背景音樂名稱>.mp3`
+
+```
+#end demo_end
+```
+
+---
+### `#stopbgm`
+
+停止播放背景音樂。
+
+---
+
 ### `#choice`
 
 向玩家呈現一組選項，每個選項分支至同一腳本中定義的路線標籤。將選項包夾在兩個 `#choice` 之間。
