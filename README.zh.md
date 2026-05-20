@@ -161,7 +161,7 @@ SceneController.Instance.ReturnScene();
 - 音樂檔案：`Assets/Resources/Audios/<背景音樂名稱>.mp3`
 
 ```
-#end demo_end
+#bgm BGM
 ```
 
 ---
