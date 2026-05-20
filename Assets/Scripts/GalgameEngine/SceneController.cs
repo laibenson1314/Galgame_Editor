@@ -24,6 +24,6 @@ public class SceneController : MonoBehaviour
     {
         await SceneManager.UnloadSceneAsync(switchSceneName);
         switchSceneName = null;
-        foreach (var item in SceneManager.GetActiveScene().GetRootGameObjects()) item.SetActive(true);
+        foreach (var item in SceneManager.GetSceneByName("SampleScene").GetRootGameObjects()) item.SetActive(true);
     }
 }

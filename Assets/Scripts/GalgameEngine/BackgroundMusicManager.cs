@@ -16,9 +16,12 @@ public class BackgroundMusicManager : MonoBehaviour
 
     public void Play(AudioClip clip, int volumn = 100)
     {
-        audioSource.clip = clip;
+        if (audioSource.clip != clip)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
         audioSource.volume = volumn / 100f;
-        audioSource.Play();
     }
     public void Stop()
     {

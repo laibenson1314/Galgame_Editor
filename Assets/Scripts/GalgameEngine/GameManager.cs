@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Story(startingStory);
+        if (PlayerPrefs.HasKey("LoadStory")) Story(PlayerPrefs.GetString("LoadStory"));
+        else Story(startingStory);
     }
 
     public void Story(string storyName)

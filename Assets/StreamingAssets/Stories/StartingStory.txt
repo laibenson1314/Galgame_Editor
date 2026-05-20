@@ -1,5 +1,5 @@
 #bg rooftop_night
-#bgm BGM 20
+#bgm BGM 100
 #enter mio normal
 
 Mio: ……Alone again, as always.

@@ -41,6 +41,8 @@ public class StoryManager : MonoBehaviour
 
     public void StartStory(string path)
     {
+        PlayerPrefs.SetString("LoadStory", Path.GetFileNameWithoutExtension(path));
+
         _path = path;
         _scripts = File.ReadAllLines(path)
             .ToList()
